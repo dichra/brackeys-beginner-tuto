@@ -12,21 +12,26 @@ const MAX_DIVISION_LEVEL = 4
 var direction = Vector2.ZERO
 var division_level: int = 0
 var speed: int = 100
+var jump_height: int = 800
 var has_hit_the_peach_yet: bool = false
 
 func _ready() -> void:
-	velocity = speed * direction
+	velocity.x = speed * direction.x
+	velocity.y = jump_height
 
 # Called when the node enters the scene tree for the first time.
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		var jump_force = sqrt(2.0 * jump_height * GRAVITY)
+		velocity += Vector2(0, jump_force * delta)
 	animation_player.play("shoot")
 	
 	var collision = move_and_collide(velocity * delta)
 	if collision:
-		velocity = velocity.bounce(collision.get_normal())
+		var bounce_velocity = velocity.bounce(collision.get_normal())
+		velocity.x = bounce_velocity.x
+		velocity.y = -abs(velocity.y)
 
 func died() -> void:
 	if not has_hit_the_peach_yet:
