@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://1hfbj1t8752y"]
+
+[ext_resource type="Script" path="res://scripts/peach.gd" id="1_2xups"]
+[ext_resource type="Texture2D" uid="uid://deixcby6x6kkc" path="res://assets/sprites/fruit.png" id="2_gwi5p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ofhkk"]
+radius = 4.0
+
+[sub_resource type="Animation" id="Animation_cd6g5"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_lkyon"]
+resource_name = "shoot"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 3.14159, -0.25, 0, 0.25, 0, 6.28319, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.233333, 0.5)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s4jet"]
+_data = {
+"RESET": SubResource("Animation_cd6g5"),
+"shoot": SubResource("Animation_lkyon")
+}
+
+[node name="Enemy_Peach" type="CharacterBody2D" groups=["mobs"]]
+position = Vector2(0, 2)
+collision_layer = 6
+collision_mask = 3
+script = ExtResource("1_2xups")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("2_gwi5p")
+offset = Vector2(0, -2)
+region_enabled = true
+region_rect = Rect2(2, 18, 11, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_ofhkk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_s4jet")
+}
+autoplay = "shoot"

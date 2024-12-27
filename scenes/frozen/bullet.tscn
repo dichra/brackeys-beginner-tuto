@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://7f7t6pbg1gxy"]
+
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_pcabr"]
+[ext_resource type="Texture2D" uid="uid://bpsqvw4pd7lyu" path="res://assets/sprites/platforms.png" id="2_vijib"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o14tk"]
+radius = 5.0
+height = 16.0
+
+[node name="Bullet" type="Area2D"]
+position = Vector2(0, 2)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_pcabr")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("2_vijib")
+offset = Vector2(0, -2)
+region_enabled = true
+region_rect = Rect2(0, 48, 16, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_o14tk")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

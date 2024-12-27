@@ -182,15 +182,12 @@ position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_04tqx")
 animation = &"jumping"
 autoplay = "default"
-frame_progress = 0.777395
+frame_progress = 0.0477147
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_34d46")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -56)
-zoom = Vector2(4, 4)
-limit_bottom = 120
-limit_smoothed = true
-position_smoothing_enabled = true
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(6, -10)
+rotation = -1.5708
